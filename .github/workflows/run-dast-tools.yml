@@ -1,0 +1,30 @@
+# DAST Workflow for the DevSecOps & Cloud Security course
+
+name: Running DAST tools
+
+on:
+  workflow_call:
+    secrets:
+      HAWK_API_KEY:
+        required: true
+
+jobs:
+  hawkscan:
+    name: HawkScan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+      - name: Run HawkScan
+        uses: stackhawk/hawkscan-action@v2.0.0
+        with:
+          apiKey: ${{ secrets.HAWK_API_KEY }}
+  zap_scan:
+    runs-on: ubuntu-latest
+    needs: hawkscan
+    name: Scan ZAP website
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.7.0
+        with:
+          target: 'https://sergiocayuqueo.herokuapp.com/'
