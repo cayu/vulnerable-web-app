@@ -11,7 +11,7 @@ jobs:
     secrets:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-  deploy-heroku:
+  build:
     name: Deploy Heroku test environment
     runs-on: ubuntu-latest
     needs: run-sast-workflow
