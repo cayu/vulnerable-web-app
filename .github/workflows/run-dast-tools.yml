@@ -29,3 +29,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: 'https://sergiocayuqueo.herokuapp.com/'
+          fail_action: false
