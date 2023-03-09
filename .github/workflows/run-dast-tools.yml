@@ -19,3 +19,14 @@ jobs:
         uses: stackhawk/hawkscan-action@v2.0.0
         with:
           apiKey: ${{ secrets.HAWK_API_KEY }}
+  zap_scan:
+    runs-on: ubuntu-latest
+    needs: hawkscan
+    name: Scan ZAP website
+    permissions:
+      security-events: write
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.7.0
+        with:
+          target: 'https://dso-cicd-maximo-rochamejia.herokuapp.com/'
