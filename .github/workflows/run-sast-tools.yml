@@ -61,7 +61,7 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: semgrep.sarif 
-   snyk:
+ snyk:
     name: Snyk scan
     runs-on: ubuntu-latest
     steps:
