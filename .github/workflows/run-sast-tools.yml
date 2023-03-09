@@ -39,7 +39,8 @@ jobs:
   semgrep:
     name: 🐛 Semgrep Scan
     runs-on: ubuntu-latest
-    security-events: write
+    permissions:
+      security-events: write
     container:
       image: returntocorp/semgrep:latest
     steps:
