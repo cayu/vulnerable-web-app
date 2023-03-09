@@ -25,8 +25,10 @@ jobs:
     name: Scan ZAP website
     permissions:
       security-events: write
+    container:
+      image: owasp/zap2docker-stable
+      options: --user root -v ${{ github.workspace }}:/zap/wrk/:rw
     steps:
-      - name: ZAP Scan
-        uses: zaproxy/action-baseline@v0.7.0
-        with:
-          target: 'https://sergiocayuqueo.herokuapp.com'
+      - run: pwd && ls -l
+      - name: run zap baseline scan
+        run: zap-baseline.py -t https://sergiocayuqueo.herokuapp.com -x report_xml.xml || echo 0
