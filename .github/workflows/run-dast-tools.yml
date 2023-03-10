@@ -32,8 +32,8 @@ jobs:
       - run: pwd && ls -l
       - name: run zap baseline scan
         run: zap-baseline.py -t https://sergiocayuqueo.herokuapp.com -x report_zap.xml -r report_zap.html -w report_zap.md || echo 0
-    - uses: actions/upload-artifact@v2
-      name: upload ZAP report
-      with:
-        name: ZAPreport
-        path: report_zap.*
+      - name: upload ZAP report
+        uses: actions/upload-artifact@v2
+        with:
+          name: ZAPreport
+          path: report_zap.*
