@@ -37,7 +37,8 @@ jobs:
     if: ${{ github.ref == 'refs/heads/master' }}
     name: 🔍 Owasp Scan
     runs-on: ubuntu-latest
-
+    permissions:
+      security-events: write
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -49,7 +50,7 @@ jobs:
       run: sleep 60s
       shell: bash
     - name: Run zap scan
-      run: docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t https://vulnerable-web-app.herokuapp.com -g gen.conf -r zapreport.html
+      run: docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t https://sergiocayuqueo.herokuapp.com -g gen.conf -r zapreport.html
       continue-on-error: true 
     - uses: actions/upload-artifact@v2
       name: upload ZAP report
