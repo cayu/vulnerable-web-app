@@ -31,29 +31,9 @@ jobs:
     steps:
       - run: pwd && ls -l
       - name: run zap baseline scan
-        run: zap-baseline.py -t https://sergiocayuqueo.herokuapp.com -x report_xml.xml || echo 0
-  
-  zap_dast_scan:
-    if: ${{ github.ref == 'refs/heads/master' }}
-    name: 🔍 Owasp Scan
-    runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Log current directory
-      run: echo ${pwd}
-    - name: Pull Docker image for ZAP
-      run: docker pull owasp/zap2docker-weekly
-    - name: Sleep for deployment completition
-      run: sleep 60s
-      shell: bash
-    - name: Run zap scan
-      run: docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t https://sergiocayuqueo.herokuapp.com -g gen.conf -r zapreport.html
-      continue-on-error: true 
+        run: zap-baseline.py -t https://sergiocayuqueo.herokuapp.com -x report_zap.xml -r report_zap.html -w report_zap.md || echo 0
     - uses: actions/upload-artifact@v2
       name: upload ZAP report
       with:
         name: ZAPreport
-        path: zapreport.html
+        path: report_zap.*
